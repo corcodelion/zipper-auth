@@ -1,0 +1,90 @@
+openapi: 3.1.0
+info:
+  contact: {}
+  description: This API exposes endpoints.
+  license:
+    name: Proprietary
+  title: Service API
+  version: v1
+servers:
+- url: /
+security:
+- bearerAuth: []
+tags:
+- description: OAuth2 client credentials token endpoint
+  name: OAuth2
+paths:
+  /oauth/token:
+    post:
+      description: Issues a JWT access token in exchange for valid API client credentials
+        using the client_credentials grant type. Credentials must be provided via
+        HTTP Basic Authentication (Base64-encoded apiKey:apiSecret).
+      operationId: token
+      parameters:
+      - description: Basic Authentication header (Base64-encoded apiKey:apiSecret)
+        explode: false
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: OAuth2 grant type (must be 'client_credentials')
+        explode: true
+        in: query
+        name: grant_type
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+          description: Access token issued successfully
+        "400":
+          description: Unsupported grant type
+        "401":
+          description: Invalid client credentials
+        "500":
+          description: Internal server error
+      summary: Exchange client credentials for an access token
+      tags:
+      - OAuth2
+      x-accepts:
+      - '*/*'
+components:
+  schemas:
+    TokenResponse:
+      example:
+        access_token: access_token
+        token_type: token_type
+        expires_in: 0
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+        expires_in:
+          format: int32
+          type: integer
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
+
