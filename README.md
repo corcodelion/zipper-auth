@@ -85,7 +85,7 @@ import com.zipper.auth.sdk.ApiException;
 import com.zipper.auth.sdk.Configuration;
 import com.zipper.auth.sdk.auth.*;
 import com.zipper.auth.sdk.model.*;
-import com.zipper.auth.sdk.api.OAuth2Api;
+import com.zipper.auth.sdk.api.MerchantApiKeysApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -96,15 +96,14 @@ public class Example {
     HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
     bearerAuth.setBearerToken("BEARER TOKEN");
 
-    OAuth2Api apiInstance = new OAuth2Api(defaultClient);
-    String authorization = "authorization_example"; // String | Basic Authentication header (Base64-encoded apiKey:apiSecret)
-    String grantType = "grantType_example"; // String | OAuth2 grant type (must be 'client_credentials')
+    MerchantApiKeysApi apiInstance = new MerchantApiKeysApi(defaultClient);
+    CreateApiKeyRequest createApiKeyRequest = new CreateApiKeyRequest(); // CreateApiKeyRequest | 
     String acceptLanguage = "en"; // String | Language preference for response content. Supported: en, he
     try {
-      TokenResponse result = apiInstance.token(authorization, grantType, acceptLanguage);
+      ApiKeyCreatedResponse result = apiInstance.createApiKey(createApiKeyRequest, acceptLanguage);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling OAuth2Api#token");
+      System.err.println("Exception when calling MerchantApiKeysApi#createApiKey");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -121,11 +120,28 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*MerchantApiKeysApi* | [**createApiKey**](docs/MerchantApiKeysApi.md#createApiKey) | **POST** /merchants/api-keys | Create a new API key
+*MerchantApiKeysApi* | [**listApiKeys**](docs/MerchantApiKeysApi.md#listApiKeys) | **GET** /merchants/api-keys | List all API keys
+*MerchantApiKeysApi* | [**revokeApiKey**](docs/MerchantApiKeysApi.md#revokeApiKey) | **DELETE** /merchants/api-keys/{id} | Revoke an API key
 *OAuth2Api* | [**token**](docs/OAuth2Api.md#token) | **POST** /oauth/token | Exchange client credentials for an access token
+*PartnerMerchantControllerApi* | [**getMerchantStatus**](docs/PartnerMerchantControllerApi.md#getMerchantStatus) | **GET** /partners/merchants/{merchantId}/status | 
+*PartnerMerchantControllerApi* | [**listMerchants**](docs/PartnerMerchantControllerApi.md#listMerchants) | **GET** /partners/merchants | 
+*PartnerMerchantControllerApi* | [**onboardMerchant**](docs/PartnerMerchantControllerApi.md#onboardMerchant) | **POST** /partners/merchants | 
 
 
 ## Documentation for Models
 
+ - [ApiKeyCreatedResponse](docs/ApiKeyCreatedResponse.md)
+ - [ApiKeySummary](docs/ApiKeySummary.md)
+ - [CreateApiKeyRequest](docs/CreateApiKeyRequest.md)
+ - [MerchantOnboardingRequest](docs/MerchantOnboardingRequest.md)
+ - [MerchantOnboardingStatus](docs/MerchantOnboardingStatus.md)
+ - [MerchantSummary](docs/MerchantSummary.md)
+ - [PageMerchantSummary](docs/PageMerchantSummary.md)
+ - [Pageable](docs/Pageable.md)
+ - [PageableObject](docs/PageableObject.md)
+ - [PartnerOnboardingResult](docs/PartnerOnboardingResult.md)
+ - [SortObject](docs/SortObject.md)
  - [TokenResponse](docs/TokenResponse.md)
 
 
@@ -134,6 +150,11 @@ Class | Method | HTTP request | Description
 
 
 Authentication schemes defined for the API:
+<a id="basicAuth"></a>
+### basicAuth
+
+- **Type**: HTTP basic authentication
+
 <a id="bearerAuth"></a>
 ### bearerAuth
 

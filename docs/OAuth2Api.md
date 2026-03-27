@@ -30,9 +30,10 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
     
-    // Configure HTTP bearer authorization: bearerAuth
-    HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
-    bearerAuth.setBearerToken("BEARER TOKEN");
+    // Configure HTTP basic authorization: basicAuth
+    HttpBasicAuth basicAuth = (HttpBasicAuth) defaultClient.getAuthentication("basicAuth");
+    basicAuth.setUsername("YOUR USERNAME");
+    basicAuth.setPassword("YOUR PASSWORD");
 
     OAuth2Api apiInstance = new OAuth2Api(defaultClient);
     String authorization = "authorization_example"; // String | Basic Authentication header (Base64-encoded apiKey:apiSecret)
@@ -66,7 +67,7 @@ public class Example {
 
 ### Authorization
 
-[bearerAuth](../README.md#bearerAuth)
+[basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 

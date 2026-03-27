@@ -96,6 +96,17 @@ public class JSON {
         gsonBuilder.registerTypeAdapter(OffsetDateTime.class, offsetDateTimeTypeAdapter);
         gsonBuilder.registerTypeAdapter(LocalDate.class, localDateTypeAdapter);
         gsonBuilder.registerTypeAdapter(byte[].class, byteArrayAdapter);
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.ApiKeyCreatedResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.ApiKeySummary.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.CreateApiKeyRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantOnboardingRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantOnboardingStatus.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantSummary.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.PageMerchantSummary.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.Pageable.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.PageableObject.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.PartnerOnboardingResult.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.SortObject.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.TokenResponse.CustomTypeAdapterFactory());
         gson = gsonBuilder.create();
     }

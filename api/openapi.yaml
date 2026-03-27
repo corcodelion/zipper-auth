@@ -8,12 +8,83 @@ info:
   version: v1
 servers:
 - url: /
-security:
-- bearerAuth: []
 tags:
+- description: Manage merchant API keys for OAuth2 client credentials authentication
+  name: Merchant API Keys
 - description: OAuth2 client credentials token endpoint
   name: OAuth2
 paths:
+  /partners/merchants:
+    get:
+      operationId: listMerchants
+      parameters:
+      - explode: true
+        in: query
+        name: pageable
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+        style: form
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PageMerchantSummary'
+          description: OK
+      security:
+      - bearerAuth: []
+      tags:
+      - partner-merchant-controller
+      x-accepts:
+      - '*/*'
+    post:
+      operationId: onboardMerchant
+      parameters:
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MerchantOnboardingRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PartnerOnboardingResult'
+          description: OK
+      security:
+      - bearerAuth: []
+      tags:
+      - partner-merchant-controller
+      x-content-type: application/json
+      x-accepts:
+      - '*/*'
   /oauth/token:
     post:
       description: Issues a JWT access token in exchange for valid API client credentials
@@ -62,13 +133,232 @@ paths:
           description: Invalid client credentials
         "500":
           description: Internal server error
+      security:
+      - basicAuth: []
       summary: Exchange client credentials for an access token
       tags:
       - OAuth2
       x-accepts:
       - '*/*'
+  /merchants/api-keys:
+    get:
+      description: "Returns a summary of all API keys belonging to the authenticated\
+        \ merchant, including status and usage metadata."
+      operationId: listApiKeys
+      parameters:
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiKeySummary'
+          description: API keys retrieved successfully
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden – requires MERCHANT role with PASSWORD auth
+      security:
+      - bearerAuth: []
+      summary: List all API keys
+      tags:
+      - Merchant API Keys
+      x-accepts:
+      - '*/*'
+    post:
+      description: Generates a new API key pair (apiKey and apiSecret) for the authenticated
+        merchant. The apiSecret is only returned once at creation time and cannot
+        be retrieved later.
+      operationId: createApiKey
+      parameters:
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiKeyRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiKeyCreatedResponse'
+          description: API key created successfully
+        "400":
+          description: Invalid request body
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden – requires MERCHANT role with PASSWORD auth
+      security:
+      - bearerAuth: []
+      summary: Create a new API key
+      tags:
+      - Merchant API Keys
+      x-content-type: application/json
+      x-accepts:
+      - '*/*'
+  /partners/merchants/{merchantId}/status:
+    get:
+      operationId: getMerchantStatus
+      parameters:
+      - explode: false
+        in: path
+        name: merchantId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantOnboardingStatus'
+          description: OK
+      security:
+      - bearerAuth: []
+      tags:
+      - partner-merchant-controller
+      x-accepts:
+      - '*/*'
+  /merchants/api-keys/{id}:
+    delete:
+      description: Permanently revokes the specified API key. The key will no longer
+        be usable for authentication.
+      operationId: revokeApiKey
+      parameters:
+      - description: API key identifier
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: API key revoked successfully
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden – requires MERCHANT role with PASSWORD auth
+        "404":
+          description: API key not found
+      security:
+      - bearerAuth: []
+      summary: Revoke an API key
+      tags:
+      - Merchant API Keys
+      x-accepts:
+      - application/json
 components:
   schemas:
+    MerchantOnboardingRequest:
+      example:
+        businessEmail: businessEmail
+        firstName: firstName
+        lastName: lastName
+        address: address
+        businessName: businessName
+        businessPhone: businessPhone
+        businessType: businessType
+        requireEmailConfirmation: true
+        email: email
+      properties:
+        firstName:
+          minLength: 1
+          type: string
+        lastName:
+          minLength: 1
+          type: string
+        businessName:
+          minLength: 1
+          type: string
+        email:
+          format: email
+          minLength: 1
+          type: string
+        businessEmail:
+          type: string
+        businessPhone:
+          type: string
+        businessType:
+          type: string
+        address:
+          type: string
+        requireEmailConfirmation:
+          type: boolean
+      required:
+      - businessName
+      - email
+      - firstName
+      - lastName
+    PartnerOnboardingResult:
+      example:
+        apiKey: apiKey
+        merchantId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        apiSecret: apiSecret
+        message: message
+      properties:
+        merchantId:
+          format: uuid
+          type: string
+        apiKey:
+          type: string
+        apiSecret:
+          type: string
+        message:
+          type: string
     TokenResponse:
       example:
         access_token: access_token
@@ -82,7 +372,263 @@ components:
         expires_in:
           format: int32
           type: integer
+    CreateApiKeyRequest:
+      example:
+        label: label
+        scopes:
+        - scopes
+        - scopes
+      properties:
+        label:
+          type: string
+        scopes:
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+    ApiKeyCreatedResponse:
+      example:
+        apiKey: apiKey
+        apiSecret: apiSecret
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        label: label
+        scopes:
+        - scopes
+        - scopes
+      properties:
+        id:
+          format: uuid
+          type: string
+        apiKey:
+          type: string
+        apiSecret:
+          type: string
+        label:
+          type: string
+        scopes:
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+    Pageable:
+      properties:
+        page:
+          format: int32
+          minimum: 0
+          type: integer
+        size:
+          format: int32
+          minimum: 1
+          type: integer
+        sort:
+          items:
+            type: string
+          type: array
+    MerchantSummary:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        origin: SELF
+        businessName: businessName
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        partnerId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        email: email
+        status: PENDING_ACTIVATION
+      properties:
+        id:
+          format: uuid
+          type: string
+        businessName:
+          type: string
+        email:
+          type: string
+        status:
+          enum:
+          - PENDING_ACTIVATION
+          - PENDING_PASSWORD_SETUP
+          - ACTIVE
+          - SUSPENDED
+          type: string
+        origin:
+          enum:
+          - SELF
+          - PARTNER_API
+          - ADMIN
+          type: string
+        partnerId:
+          format: uuid
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+    PageMerchantSummary:
+      example:
+        number: 5
+        size: 1
+        last: true
+        numberOfElements: 9
+        totalPages: 6
+        pageable:
+          paged: true
+          pageNumber: 2
+          offset: 5
+          pageSize: 7
+          unpaged: true
+          sort:
+            unsorted: true
+            sorted: true
+            empty: true
+        sort:
+          unsorted: true
+          sorted: true
+          empty: true
+        content:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          origin: SELF
+          businessName: businessName
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          partnerId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          email: email
+          status: PENDING_ACTIVATION
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          origin: SELF
+          businessName: businessName
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          partnerId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          email: email
+          status: PENDING_ACTIVATION
+        first: true
+        totalElements: 0
+        empty: true
+      properties:
+        totalElements:
+          format: int64
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+        size:
+          format: int32
+          type: integer
+        content:
+          items:
+            $ref: '#/components/schemas/MerchantSummary'
+          type: array
+        number:
+          format: int32
+          type: integer
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          format: int32
+          type: integer
+        empty:
+          type: boolean
+    PageableObject:
+      example:
+        paged: true
+        pageNumber: 2
+        offset: 5
+        pageSize: 7
+        unpaged: true
+        sort:
+          unsorted: true
+          sorted: true
+          empty: true
+      properties:
+        offset:
+          format: int64
+          type: integer
+        paged:
+          type: boolean
+        pageNumber:
+          format: int32
+          type: integer
+        pageSize:
+          format: int32
+          type: integer
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        unpaged:
+          type: boolean
+    SortObject:
+      example:
+        unsorted: true
+        sorted: true
+        empty: true
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+    MerchantOnboardingStatus:
+      example:
+        emailVerified: true
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        merchantId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        status: PENDING_ACTIVATION
+      properties:
+        merchantId:
+          format: uuid
+          type: string
+        status:
+          enum:
+          - PENDING_ACTIVATION
+          - PENDING_PASSWORD_SETUP
+          - ACTIVE
+          - SUSPENDED
+          type: string
+        emailVerified:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+    ApiKeySummary:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        lastUsedAt: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        apiKeyPrefix: apiKeyPrefix
+        label: label
+        scopes:
+        - scopes
+        - scopes
+        status: ACTIVE
+      properties:
+        id:
+          format: uuid
+          type: string
+        apiKeyPrefix:
+          type: string
+        label:
+          type: string
+        scopes:
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        status:
+          enum:
+          - ACTIVE
+          - REVOKED
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        lastUsedAt:
+          format: date-time
+          type: string
   securitySchemes:
+    basicAuth:
+      scheme: basic
+      type: http
     bearerAuth:
       bearerFormat: JWT
       scheme: bearer
