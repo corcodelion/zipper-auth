@@ -102,11 +102,8 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantOnboardingRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantOnboardingStatus.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.MerchantSummary.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.PageMerchantSummary.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.Pageable.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.PageableObject.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.PartnerOnboardingResult.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.SortObject.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.zipper.auth.sdk.model.TokenResponse.CustomTypeAdapterFactory());
         gson = gsonBuilder.create();
     }

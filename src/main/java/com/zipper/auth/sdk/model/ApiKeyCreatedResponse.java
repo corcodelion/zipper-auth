@@ -49,7 +49,7 @@ import java.util.Set;
 import com.zipper.auth.sdk.JSON;
 
 /**
- * ApiKeyCreatedResponse
+ * Response returned when a new API key is created, including the secret shown only once
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.13.0")
 public class ApiKeyCreatedResponse {
@@ -87,7 +87,7 @@ public class ApiKeyCreatedResponse {
   }
 
   /**
-   * Get id
+   * Unique identifier of the API key
    * @return id
    */
   @javax.annotation.Nullable
@@ -106,7 +106,7 @@ public class ApiKeyCreatedResponse {
   }
 
   /**
-   * Get apiKey
+   * The API key value used as the client ID
    * @return apiKey
    */
   @javax.annotation.Nullable
@@ -125,7 +125,7 @@ public class ApiKeyCreatedResponse {
   }
 
   /**
-   * Get apiSecret
+   * The API secret – only returned once at creation time and cannot be retrieved later
    * @return apiSecret
    */
   @javax.annotation.Nullable
@@ -144,7 +144,7 @@ public class ApiKeyCreatedResponse {
   }
 
   /**
-   * Get label
+   * Human-readable label for identifying this API key
    * @return label
    */
   @javax.annotation.Nullable
@@ -171,7 +171,7 @@ public class ApiKeyCreatedResponse {
   }
 
   /**
-   * Get scopes
+   * Set of permission scopes granted to this API key
    * @return scopes
    */
   @javax.annotation.Nullable

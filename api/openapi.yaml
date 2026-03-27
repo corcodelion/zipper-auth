@@ -9,6 +9,8 @@ info:
 servers:
 - url: /
 tags:
+- description: Manage merchants onboarded by the authenticated partner
+  name: Partner Merchants
 - description: Manage merchant API keys for OAuth2 client credentials authentication
   name: Merchant API Keys
 - description: OAuth2 client credentials token endpoint
@@ -16,7 +18,9 @@ tags:
 paths:
   /partners/merchants:
     get:
-      operationId: listMerchants
+      description: "Returns a paginated list of all merchants onboarded by the authenticated\
+        \ partner, including their business name, email, status, and onboarding origin."
+      operationId: listPartnerMerchants
       parameters:
       - explode: true
         in: query
@@ -42,16 +46,23 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/PageMerchantSummary'
-          description: OK
+                $ref: '#/components/schemas/MerchantSummary'
+          description: Merchants retrieved successfully
+        "401":
+          description: Unauthorized
+        "404":
+          description: Partner not found
       security:
       - bearerAuth: []
+      summary: List partner merchants
       tags:
-      - partner-merchant-controller
+      - Partner Merchants
       x-accepts:
       - '*/*'
     post:
-      operationId: onboardMerchant
+      description: Creates and onboards a new merchant under the authenticated partner.
+        The merchant will receive an activation email to complete registration.
+      operationId: partnerOnboardMerchant
       parameters:
       - description: "Language preference for response content. Supported: en, he"
         explode: false
@@ -77,11 +88,18 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/PartnerOnboardingResult'
-          description: OK
+          description: Merchant onboarded successfully
+        "400":
+          description: Invalid request body
+        "401":
+          description: Unauthorized
+        "404":
+          description: Partner not found
       security:
       - bearerAuth: []
+      summary: Onboard a new merchant
       tags:
-      - partner-merchant-controller
+      - Partner Merchants
       x-content-type: application/json
       x-accepts:
       - '*/*'
@@ -223,9 +241,13 @@ paths:
       - '*/*'
   /partners/merchants/{merchantId}/status:
     get:
-      operationId: getMerchantStatus
+      description: "Returns the onboarding status of a specific merchant, including\
+        \ account status, email verification state, and creation date. The merchant\
+        \ must belong to the authenticated partner."
+      operationId: getPartnerMerchantStatus
       parameters:
-      - explode: false
+      - description: Merchant identifier
+        explode: false
         in: path
         name: merchantId
         required: true
@@ -251,11 +273,63 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/MerchantOnboardingStatus'
-          description: OK
+          description: Merchant status retrieved successfully
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden – merchant does not belong to this partner
+        "404":
+          description: Merchant not found
       security:
       - bearerAuth: []
+      summary: Get merchant onboarding status
       tags:
-      - partner-merchant-controller
+      - Partner Merchants
+      x-accepts:
+      - '*/*'
+  /partners/merchants/by-email:
+    get:
+      description: Looks up a merchant by their email address within the authenticated
+        partner's scope. Returns the merchant summary if found and belongs to this
+        partner.
+      operationId: getPartnerMerchantByEmail
+      parameters:
+      - description: Merchant email address
+        explode: true
+        in: query
+        name: email
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: "Language preference for response content. Supported: en, he"
+        explode: false
+        in: header
+        name: Accept-Language
+        required: false
+        schema:
+          default: en
+          enum:
+          - en
+          - he
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MerchantSummary'
+          description: Merchant found
+        "401":
+          description: Unauthorized
+        "404":
+          description: Merchant not found for this partner
+      security:
+      - bearerAuth: []
+      summary: Get merchant by email
+      tags:
+      - Partner Merchants
       x-accepts:
       - '*/*'
   /merchants/api-keys/{id}:
@@ -344,6 +418,8 @@ components:
       - firstName
       - lastName
     PartnerOnboardingResult:
+      description: "Result of a partner-initiated merchant onboarding, including generated\
+        \ API credentials"
       example:
         apiKey: apiKey
         merchantId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -351,13 +427,18 @@ components:
         message: message
       properties:
         merchantId:
+          description: Unique identifier of the newly onboarded merchant
           format: uuid
           type: string
         apiKey:
+          description: Generated API key for the merchant
           type: string
         apiSecret:
+          description: Generated API secret for the merchant – only returned once
+            at creation time
           type: string
         message:
+          description: Human-readable status message about the onboarding result
           type: string
     TokenResponse:
       example:
@@ -387,6 +468,8 @@ components:
           type: array
           uniqueItems: true
     ApiKeyCreatedResponse:
+      description: "Response returned when a new API key is created, including the\
+        \ secret shown only once"
       example:
         apiKey: apiKey
         apiSecret: apiSecret
@@ -397,15 +480,21 @@ components:
         - scopes
       properties:
         id:
+          description: Unique identifier of the API key
           format: uuid
           type: string
         apiKey:
+          description: The API key value used as the client ID
           type: string
         apiSecret:
+          description: The API secret – only returned once at creation time and cannot
+            be retrieved later
           type: string
         label:
+          description: Human-readable label for identifying this API key
           type: string
         scopes:
+          description: Set of permission scopes granted to this API key
           items:
             type: string
           type: array
@@ -425,6 +514,8 @@ components:
             type: string
           type: array
     MerchantSummary:
+      description: "Summary view of a merchant including business info, status, and\
+        \ onboarding origin"
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         origin: SELF
@@ -435,13 +526,17 @@ components:
         status: PENDING_ACTIVATION
       properties:
         id:
+          description: Unique identifier of the merchant
           format: uuid
           type: string
         businessName:
+          description: Registered business name of the merchant
           type: string
         email:
+          description: Email address associated with the merchant account
           type: string
         status:
+          description: Current account status of the merchant
           enum:
           - PENDING_ACTIVATION
           - PENDING_PASSWORD_SETUP
@@ -449,126 +544,24 @@ components:
           - SUSPENDED
           type: string
         origin:
+          description: "How the merchant was onboarded (e.g. SELF, PARTNER)"
           enum:
           - SELF
           - PARTNER_API
           - ADMIN
           type: string
         partnerId:
+          description: "Identifier of the partner that onboarded this merchant, if\
+            \ any"
           format: uuid
           type: string
         createdAt:
+          description: Timestamp when the merchant was created
           format: date-time
           type: string
-    PageMerchantSummary:
-      example:
-        number: 5
-        size: 1
-        last: true
-        numberOfElements: 9
-        totalPages: 6
-        pageable:
-          paged: true
-          pageNumber: 2
-          offset: 5
-          pageSize: 7
-          unpaged: true
-          sort:
-            unsorted: true
-            sorted: true
-            empty: true
-        sort:
-          unsorted: true
-          sorted: true
-          empty: true
-        content:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          origin: SELF
-          businessName: businessName
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          partnerId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          email: email
-          status: PENDING_ACTIVATION
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          origin: SELF
-          businessName: businessName
-          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          partnerId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          email: email
-          status: PENDING_ACTIVATION
-        first: true
-        totalElements: 0
-        empty: true
-      properties:
-        totalElements:
-          format: int64
-          type: integer
-        totalPages:
-          format: int32
-          type: integer
-        size:
-          format: int32
-          type: integer
-        content:
-          items:
-            $ref: '#/components/schemas/MerchantSummary'
-          type: array
-        number:
-          format: int32
-          type: integer
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
-        sort:
-          $ref: '#/components/schemas/SortObject'
-        first:
-          type: boolean
-        last:
-          type: boolean
-        numberOfElements:
-          format: int32
-          type: integer
-        empty:
-          type: boolean
-    PageableObject:
-      example:
-        paged: true
-        pageNumber: 2
-        offset: 5
-        pageSize: 7
-        unpaged: true
-        sort:
-          unsorted: true
-          sorted: true
-          empty: true
-      properties:
-        offset:
-          format: int64
-          type: integer
-        paged:
-          type: boolean
-        pageNumber:
-          format: int32
-          type: integer
-        pageSize:
-          format: int32
-          type: integer
-        sort:
-          $ref: '#/components/schemas/SortObject'
-        unpaged:
-          type: boolean
-    SortObject:
-      example:
-        unsorted: true
-        sorted: true
-        empty: true
-      properties:
-        empty:
-          type: boolean
-        sorted:
-          type: boolean
-        unsorted:
-          type: boolean
     MerchantOnboardingStatus:
+      description: Current onboarding status of a merchant including verification
+        state
       example:
         emailVerified: true
         createdAt: 2000-01-23T04:56:07.000+00:00
@@ -576,9 +569,11 @@ components:
         status: PENDING_ACTIVATION
       properties:
         merchantId:
+          description: Unique identifier of the merchant
           format: uuid
           type: string
         status:
+          description: Current account status of the merchant
           enum:
           - PENDING_ACTIVATION
           - PENDING_PASSWORD_SETUP
@@ -586,11 +581,14 @@ components:
           - SUSPENDED
           type: string
         emailVerified:
+          description: Whether the merchant's email address has been verified
           type: boolean
         createdAt:
+          description: Timestamp when the merchant was created
           format: date-time
           type: string
     ApiKeySummary:
+      description: Summary of an API key including status and usage metadata
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
         lastUsedAt: 2000-01-23T04:56:07.000+00:00
@@ -603,26 +601,33 @@ components:
         status: ACTIVE
       properties:
         id:
+          description: Unique identifier of the API key
           format: uuid
           type: string
         apiKeyPrefix:
+          description: First few characters of the API key for identification
           type: string
         label:
+          description: Human-readable label for identifying this API key
           type: string
         scopes:
+          description: Set of permission scopes granted to this API key
           items:
             type: string
           type: array
           uniqueItems: true
         status:
+          description: "Current status of the API key (e.g. ACTIVE, REVOKED)"
           enum:
           - ACTIVE
           - REVOKED
           type: string
         createdAt:
+          description: Timestamp when the API key was created
           format: date-time
           type: string
         lastUsedAt:
+          description: Timestamp when the API key was last used for authentication
           format: date-time
           type: string
   securitySchemes:

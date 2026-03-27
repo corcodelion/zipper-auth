@@ -50,7 +50,7 @@ import java.util.Set;
 import com.zipper.auth.sdk.JSON;
 
 /**
- * ApiKeySummary
+ * Summary of an API key including status and usage metadata
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.13.0")
 public class ApiKeySummary {
@@ -75,7 +75,7 @@ public class ApiKeySummary {
   private Set<String> scopes = new LinkedHashSet<>();
 
   /**
-   * Gets or Sets status
+   * Current status of the API key (e.g. ACTIVE, REVOKED)
    */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
@@ -150,7 +150,7 @@ public class ApiKeySummary {
   }
 
   /**
-   * Get id
+   * Unique identifier of the API key
    * @return id
    */
   @javax.annotation.Nullable
@@ -169,7 +169,7 @@ public class ApiKeySummary {
   }
 
   /**
-   * Get apiKeyPrefix
+   * First few characters of the API key for identification
    * @return apiKeyPrefix
    */
   @javax.annotation.Nullable
@@ -188,7 +188,7 @@ public class ApiKeySummary {
   }
 
   /**
-   * Get label
+   * Human-readable label for identifying this API key
    * @return label
    */
   @javax.annotation.Nullable
@@ -215,7 +215,7 @@ public class ApiKeySummary {
   }
 
   /**
-   * Get scopes
+   * Set of permission scopes granted to this API key
    * @return scopes
    */
   @javax.annotation.Nullable
@@ -234,7 +234,7 @@ public class ApiKeySummary {
   }
 
   /**
-   * Get status
+   * Current status of the API key (e.g. ACTIVE, REVOKED)
    * @return status
    */
   @javax.annotation.Nullable
@@ -253,7 +253,7 @@ public class ApiKeySummary {
   }
 
   /**
-   * Get createdAt
+   * Timestamp when the API key was created
    * @return createdAt
    */
   @javax.annotation.Nullable
@@ -272,7 +272,7 @@ public class ApiKeySummary {
   }
 
   /**
-   * Get lastUsedAt
+   * Timestamp when the API key was last used for authentication
    * @return lastUsedAt
    */
   @javax.annotation.Nullable

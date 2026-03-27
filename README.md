@@ -124,9 +124,10 @@ Class | Method | HTTP request | Description
 *MerchantApiKeysApi* | [**listApiKeys**](docs/MerchantApiKeysApi.md#listApiKeys) | **GET** /merchants/api-keys | List all API keys
 *MerchantApiKeysApi* | [**revokeApiKey**](docs/MerchantApiKeysApi.md#revokeApiKey) | **DELETE** /merchants/api-keys/{id} | Revoke an API key
 *OAuth2Api* | [**token**](docs/OAuth2Api.md#token) | **POST** /oauth/token | Exchange client credentials for an access token
-*PartnerMerchantControllerApi* | [**getMerchantStatus**](docs/PartnerMerchantControllerApi.md#getMerchantStatus) | **GET** /partners/merchants/{merchantId}/status | 
-*PartnerMerchantControllerApi* | [**listMerchants**](docs/PartnerMerchantControllerApi.md#listMerchants) | **GET** /partners/merchants | 
-*PartnerMerchantControllerApi* | [**onboardMerchant**](docs/PartnerMerchantControllerApi.md#onboardMerchant) | **POST** /partners/merchants | 
+*PartnerMerchantsApi* | [**getPartnerMerchantByEmail**](docs/PartnerMerchantsApi.md#getPartnerMerchantByEmail) | **GET** /partners/merchants/by-email | Get merchant by email
+*PartnerMerchantsApi* | [**getPartnerMerchantStatus**](docs/PartnerMerchantsApi.md#getPartnerMerchantStatus) | **GET** /partners/merchants/{merchantId}/status | Get merchant onboarding status
+*PartnerMerchantsApi* | [**listPartnerMerchants**](docs/PartnerMerchantsApi.md#listPartnerMerchants) | **GET** /partners/merchants | List partner merchants
+*PartnerMerchantsApi* | [**partnerOnboardMerchant**](docs/PartnerMerchantsApi.md#partnerOnboardMerchant) | **POST** /partners/merchants | Onboard a new merchant
 
 
 ## Documentation for Models
@@ -137,11 +138,8 @@ Class | Method | HTTP request | Description
  - [MerchantOnboardingRequest](docs/MerchantOnboardingRequest.md)
  - [MerchantOnboardingStatus](docs/MerchantOnboardingStatus.md)
  - [MerchantSummary](docs/MerchantSummary.md)
- - [PageMerchantSummary](docs/PageMerchantSummary.md)
  - [Pageable](docs/Pageable.md)
- - [PageableObject](docs/PageableObject.md)
  - [PartnerOnboardingResult](docs/PartnerOnboardingResult.md)
- - [SortObject](docs/SortObject.md)
  - [TokenResponse](docs/TokenResponse.md)
 
 

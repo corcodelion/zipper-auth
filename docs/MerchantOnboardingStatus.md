@@ -2,15 +2,16 @@
 
 # MerchantOnboardingStatus
 
+Current onboarding status of a merchant including verification state
 
 ## Properties
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-|**merchantId** | **UUID** |  |  [optional] |
-|**status** | [**StatusEnum**](#StatusEnum) |  |  [optional] |
-|**emailVerified** | **Boolean** |  |  [optional] |
-|**createdAt** | **OffsetDateTime** |  |  [optional] |
+|**merchantId** | **UUID** | Unique identifier of the merchant |  [optional] |
+|**status** | [**StatusEnum**](#StatusEnum) | Current account status of the merchant |  [optional] |
+|**emailVerified** | **Boolean** | Whether the merchant&#39;s email address has been verified |  [optional] |
+|**createdAt** | **OffsetDateTime** | Timestamp when the merchant was created |  [optional] |
 
 
 

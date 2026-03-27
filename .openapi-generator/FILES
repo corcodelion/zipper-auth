@@ -14,12 +14,9 @@ docs/MerchantOnboardingRequest.md
 docs/MerchantOnboardingStatus.md
 docs/MerchantSummary.md
 docs/OAuth2Api.md
-docs/PageMerchantSummary.md
 docs/Pageable.md
-docs/PageableObject.md
-docs/PartnerMerchantControllerApi.md
+docs/PartnerMerchantsApi.md
 docs/PartnerOnboardingResult.md
-docs/SortObject.md
 docs/TokenResponse.md
 git_push.sh
 gradle.properties
@@ -45,7 +42,7 @@ src/main/java/com/zipper/auth/sdk/ServerVariable.java
 src/main/java/com/zipper/auth/sdk/StringUtil.java
 src/main/java/com/zipper/auth/sdk/api/MerchantApiKeysApi.java
 src/main/java/com/zipper/auth/sdk/api/OAuth2Api.java
-src/main/java/com/zipper/auth/sdk/api/PartnerMerchantControllerApi.java
+src/main/java/com/zipper/auth/sdk/api/PartnerMerchantsApi.java
 src/main/java/com/zipper/auth/sdk/auth/ApiKeyAuth.java
 src/main/java/com/zipper/auth/sdk/auth/Authentication.java
 src/main/java/com/zipper/auth/sdk/auth/HttpBasicAuth.java
@@ -57,9 +54,6 @@ src/main/java/com/zipper/auth/sdk/model/CreateApiKeyRequest.java
 src/main/java/com/zipper/auth/sdk/model/MerchantOnboardingRequest.java
 src/main/java/com/zipper/auth/sdk/model/MerchantOnboardingStatus.java
 src/main/java/com/zipper/auth/sdk/model/MerchantSummary.java
-src/main/java/com/zipper/auth/sdk/model/PageMerchantSummary.java
 src/main/java/com/zipper/auth/sdk/model/Pageable.java
-src/main/java/com/zipper/auth/sdk/model/PageableObject.java
 src/main/java/com/zipper/auth/sdk/model/PartnerOnboardingResult.java
-src/main/java/com/zipper/auth/sdk/model/SortObject.java
 src/main/java/com/zipper/auth/sdk/model/TokenResponse.java

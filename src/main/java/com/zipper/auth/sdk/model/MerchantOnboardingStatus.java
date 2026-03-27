@@ -48,7 +48,7 @@ import java.util.Set;
 import com.zipper.auth.sdk.JSON;
 
 /**
- * MerchantOnboardingStatus
+ * Current onboarding status of a merchant including verification state
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.13.0")
 public class MerchantOnboardingStatus {
@@ -58,7 +58,7 @@ public class MerchantOnboardingStatus {
   private UUID merchantId;
 
   /**
-   * Gets or Sets status
+   * Current account status of the merchant
    */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
@@ -137,7 +137,7 @@ public class MerchantOnboardingStatus {
   }
 
   /**
-   * Get merchantId
+   * Unique identifier of the merchant
    * @return merchantId
    */
   @javax.annotation.Nullable
@@ -156,7 +156,7 @@ public class MerchantOnboardingStatus {
   }
 
   /**
-   * Get status
+   * Current account status of the merchant
    * @return status
    */
   @javax.annotation.Nullable
@@ -175,7 +175,7 @@ public class MerchantOnboardingStatus {
   }
 
   /**
-   * Get emailVerified
+   * Whether the merchant&#39;s email address has been verified
    * @return emailVerified
    */
   @javax.annotation.Nullable
@@ -194,7 +194,7 @@ public class MerchantOnboardingStatus {
   }
 
   /**
-   * Get createdAt
+   * Timestamp when the merchant was created
    * @return createdAt
    */
   @javax.annotation.Nullable

@@ -48,7 +48,7 @@ import java.util.Set;
 import com.zipper.auth.sdk.JSON;
 
 /**
- * MerchantSummary
+ * Summary view of a merchant including business info, status, and onboarding origin
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.13.0")
 public class MerchantSummary {
@@ -68,7 +68,7 @@ public class MerchantSummary {
   private String email;
 
   /**
-   * Gets or Sets status
+   * Current account status of the merchant
    */
   @JsonAdapter(StatusEnum.Adapter.class)
   public enum StatusEnum {
@@ -129,7 +129,7 @@ public class MerchantSummary {
   private StatusEnum status;
 
   /**
-   * Gets or Sets origin
+   * How the merchant was onboarded (e.g. SELF, PARTNER)
    */
   @JsonAdapter(OriginEnum.Adapter.class)
   public enum OriginEnum {
@@ -206,7 +206,7 @@ public class MerchantSummary {
   }
 
   /**
-   * Get id
+   * Unique identifier of the merchant
    * @return id
    */
   @javax.annotation.Nullable
@@ -225,7 +225,7 @@ public class MerchantSummary {
   }
 
   /**
-   * Get businessName
+   * Registered business name of the merchant
    * @return businessName
    */
   @javax.annotation.Nullable
@@ -244,7 +244,7 @@ public class MerchantSummary {
   }
 
   /**
-   * Get email
+   * Email address associated with the merchant account
    * @return email
    */
   @javax.annotation.Nullable
@@ -263,7 +263,7 @@ public class MerchantSummary {
   }
 
   /**
-   * Get status
+   * Current account status of the merchant
    * @return status
    */
   @javax.annotation.Nullable
@@ -282,7 +282,7 @@ public class MerchantSummary {
   }
 
   /**
-   * Get origin
+   * How the merchant was onboarded (e.g. SELF, PARTNER)
    * @return origin
    */
   @javax.annotation.Nullable
@@ -301,7 +301,7 @@ public class MerchantSummary {
   }
 
   /**
-   * Get partnerId
+   * Identifier of the partner that onboarded this merchant, if any
    * @return partnerId
    */
   @javax.annotation.Nullable
@@ -320,7 +320,7 @@ public class MerchantSummary {
   }
 
   /**
-   * Get createdAt
+   * Timestamp when the merchant was created
    * @return createdAt
    */
   @javax.annotation.Nullable

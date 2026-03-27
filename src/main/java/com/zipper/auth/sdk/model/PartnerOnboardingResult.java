@@ -47,7 +47,7 @@ import java.util.Set;
 import com.zipper.auth.sdk.JSON;
 
 /**
- * PartnerOnboardingResult
+ * Result of a partner-initiated merchant onboarding, including generated API credentials
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.13.0")
 public class PartnerOnboardingResult {
@@ -80,7 +80,7 @@ public class PartnerOnboardingResult {
   }
 
   /**
-   * Get merchantId
+   * Unique identifier of the newly onboarded merchant
    * @return merchantId
    */
   @javax.annotation.Nullable
@@ -99,7 +99,7 @@ public class PartnerOnboardingResult {
   }
 
   /**
-   * Get apiKey
+   * Generated API key for the merchant
    * @return apiKey
    */
   @javax.annotation.Nullable
@@ -118,7 +118,7 @@ public class PartnerOnboardingResult {
   }
 
   /**
-   * Get apiSecret
+   * Generated API secret for the merchant – only returned once at creation time
    * @return apiSecret
    */
   @javax.annotation.Nullable
@@ -137,7 +137,7 @@ public class PartnerOnboardingResult {
   }
 
   /**
-   * Get message
+   * Human-readable status message about the onboarding result
    * @return message
    */
   @javax.annotation.Nullable
