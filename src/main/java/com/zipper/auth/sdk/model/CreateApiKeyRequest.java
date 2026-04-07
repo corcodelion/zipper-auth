@@ -1,6 +1,6 @@
 /*
- * Service API
- * This API exposes endpoints.
+ * Zipper Auth API
+ * Authentication, OAuth, API keys, and partner/merchant onboarding endpoints exposed via the gateway.
  *
  * The version of the OpenAPI document: v1
  * 

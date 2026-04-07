@@ -1,6 +1,6 @@
 /*
- * Service API
- * This API exposes endpoints.
+ * Zipper Auth API
+ * Authentication, OAuth, API keys, and partner/merchant onboarding endpoints exposed via the gateway.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -110,7 +110,7 @@ public class PartnerMerchantsApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/partners/merchants/by-email";
+        String localVarPath = "/auth/partners/merchants/by-email";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -258,7 +258,7 @@ public class PartnerMerchantsApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/partners/merchants/{merchantId}/status"
+        String localVarPath = "/auth/partners/merchants/{merchantId}/status"
             .replace("{" + "merchantId" + "}", localVarApiClient.escapeString(merchantId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -405,7 +405,7 @@ public class PartnerMerchantsApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/partners/merchants";
+        String localVarPath = "/auth/partners/merchants";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -553,7 +553,7 @@ public class PartnerMerchantsApi {
         Object localVarPostBody = merchantOnboardingRequest;
 
         // create path and map variables
-        String localVarPath = "/partners/merchants";
+        String localVarPath = "/auth/partners/merchants";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();

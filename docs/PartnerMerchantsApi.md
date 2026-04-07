@@ -1,13 +1,13 @@
 # PartnerMerchantsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *http://localhost:8080*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getPartnerMerchantByEmail**](PartnerMerchantsApi.md#getPartnerMerchantByEmail) | **GET** /partners/merchants/by-email | Get merchant by email |
-| [**getPartnerMerchantStatus**](PartnerMerchantsApi.md#getPartnerMerchantStatus) | **GET** /partners/merchants/{merchantId}/status | Get merchant onboarding status |
-| [**listPartnerMerchants**](PartnerMerchantsApi.md#listPartnerMerchants) | **GET** /partners/merchants | List partner merchants |
-| [**partnerOnboardMerchant**](PartnerMerchantsApi.md#partnerOnboardMerchant) | **POST** /partners/merchants | Onboard a new merchant |
+| [**getPartnerMerchantByEmail**](PartnerMerchantsApi.md#getPartnerMerchantByEmail) | **GET** /auth/partners/merchants/by-email | Get merchant by email |
+| [**getPartnerMerchantStatus**](PartnerMerchantsApi.md#getPartnerMerchantStatus) | **GET** /auth/partners/merchants/{merchantId}/status | Get merchant onboarding status |
+| [**listPartnerMerchants**](PartnerMerchantsApi.md#listPartnerMerchants) | **GET** /auth/partners/merchants | List partner merchants |
+| [**partnerOnboardMerchant**](PartnerMerchantsApi.md#partnerOnboardMerchant) | **POST** /auth/partners/merchants | Onboard a new merchant |
 
 
 <a id="getPartnerMerchantByEmail"></a>
@@ -31,7 +31,7 @@ import com.zipper.auth.sdk.api.PartnerMerchantsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
+    defaultClient.setBasePath("http://localhost:8080");
     
     // Configure HTTP bearer authorization: bearerAuth
     HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
@@ -102,7 +102,7 @@ import com.zipper.auth.sdk.api.PartnerMerchantsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
+    defaultClient.setBasePath("http://localhost:8080");
     
     // Configure HTTP bearer authorization: bearerAuth
     HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
@@ -174,7 +174,7 @@ import com.zipper.auth.sdk.api.PartnerMerchantsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
+    defaultClient.setBasePath("http://localhost:8080");
     
     // Configure HTTP bearer authorization: bearerAuth
     HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
@@ -245,7 +245,7 @@ import com.zipper.auth.sdk.api.PartnerMerchantsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
+    defaultClient.setBasePath("http://localhost:8080");
     
     // Configure HTTP bearer authorization: bearerAuth
     HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");

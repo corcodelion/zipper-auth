@@ -1,13 +1,15 @@
 openapi: 3.1.0
 info:
   contact: {}
-  description: This API exposes endpoints.
+  description: "Authentication, OAuth, API keys, and partner/merchant onboarding endpoints\
+    \ exposed via the gateway."
   license:
     name: Proprietary
-  title: Service API
+  title: Zipper Auth API
   version: v1
 servers:
-- url: /
+- description: Gateway base URL
+  url: http://localhost:8080
 tags:
 - description: Manage merchants onboarded by the authenticated partner
   name: Partner Merchants
@@ -16,7 +18,7 @@ tags:
 - description: OAuth2 client credentials token endpoint
   name: OAuth2
 paths:
-  /partners/merchants:
+  /auth/partners/merchants:
     get:
       description: "Returns a paginated list of all merchants onboarded by the authenticated\
         \ partner, including their business name, email, status, and onboarding origin."
@@ -158,7 +160,7 @@ paths:
       - OAuth2
       x-accepts:
       - '*/*'
-  /merchants/api-keys:
+  /auth/merchants/api-keys:
     get:
       description: "Returns a summary of all API keys belonging to the authenticated\
         \ merchant, including status and usage metadata."
@@ -239,7 +241,7 @@ paths:
       x-content-type: application/json
       x-accepts:
       - '*/*'
-  /partners/merchants/{merchantId}/status:
+  /auth/partners/merchants/{merchantId}/status:
     get:
       description: "Returns the onboarding status of a specific merchant, including\
         \ account status, email verification state, and creation date. The merchant\
@@ -287,7 +289,7 @@ paths:
       - Partner Merchants
       x-accepts:
       - '*/*'
-  /partners/merchants/by-email:
+  /auth/partners/merchants/by-email:
     get:
       description: Looks up a merchant by their email address within the authenticated
         partner's scope. Returns the merchant summary if found and belongs to this
@@ -332,7 +334,7 @@ paths:
       - Partner Merchants
       x-accepts:
       - '*/*'
-  /merchants/api-keys/{id}:
+  /auth/merchants/api-keys/{id}:
     delete:
       description: Permanently revokes the specified API key. The key will no longer
         be usable for authentication.

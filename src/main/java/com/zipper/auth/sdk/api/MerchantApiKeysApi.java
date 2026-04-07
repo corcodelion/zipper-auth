@@ -1,6 +1,6 @@
 /*
- * Service API
- * This API exposes endpoints.
+ * Zipper Auth API
+ * Authentication, OAuth, API keys, and partner/merchant onboarding endpoints exposed via the gateway.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -109,7 +109,7 @@ public class MerchantApiKeysApi {
         Object localVarPostBody = createApiKeyRequest;
 
         // create path and map variables
-        String localVarPath = "/merchants/api-keys";
+        String localVarPath = "/auth/merchants/api-keys";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -255,7 +255,7 @@ public class MerchantApiKeysApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/merchants/api-keys";
+        String localVarPath = "/auth/merchants/api-keys";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -391,7 +391,7 @@ public class MerchantApiKeysApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/merchants/api-keys/{id}"
+        String localVarPath = "/auth/merchants/api-keys/{id}"
             .replace("{" + "id" + "}", localVarApiClient.escapeString(id.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();

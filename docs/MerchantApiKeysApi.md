@@ -1,12 +1,12 @@
 # MerchantApiKeysApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *http://localhost:8080*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createApiKey**](MerchantApiKeysApi.md#createApiKey) | **POST** /merchants/api-keys | Create a new API key |
-| [**listApiKeys**](MerchantApiKeysApi.md#listApiKeys) | **GET** /merchants/api-keys | List all API keys |
-| [**revokeApiKey**](MerchantApiKeysApi.md#revokeApiKey) | **DELETE** /merchants/api-keys/{id} | Revoke an API key |
+| [**createApiKey**](MerchantApiKeysApi.md#createApiKey) | **POST** /auth/merchants/api-keys | Create a new API key |
+| [**listApiKeys**](MerchantApiKeysApi.md#listApiKeys) | **GET** /auth/merchants/api-keys | List all API keys |
+| [**revokeApiKey**](MerchantApiKeysApi.md#revokeApiKey) | **DELETE** /auth/merchants/api-keys/{id} | Revoke an API key |
 
 
 <a id="createApiKey"></a>
@@ -30,7 +30,7 @@ import com.zipper.auth.sdk.api.MerchantApiKeysApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
+    defaultClient.setBasePath("http://localhost:8080");
     
     // Configure HTTP bearer authorization: bearerAuth
     HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
@@ -102,7 +102,7 @@ import com.zipper.auth.sdk.api.MerchantApiKeysApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
+    defaultClient.setBasePath("http://localhost:8080");
     
     // Configure HTTP bearer authorization: bearerAuth
     HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
@@ -171,7 +171,7 @@ import com.zipper.auth.sdk.api.MerchantApiKeysApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
+    defaultClient.setBasePath("http://localhost:8080");
     
     // Configure HTTP bearer authorization: bearerAuth
     HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");

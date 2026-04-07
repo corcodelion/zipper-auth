@@ -1,6 +1,6 @@
 /*
- * Service API
- * This API exposes endpoints.
+ * Zipper Auth API
+ * Authentication, OAuth, API keys, and partner/merchant onboarding endpoints exposed via the gateway.
  *
  * The version of the OpenAPI document: v1
  * 
@@ -61,11 +61,11 @@ import com.zipper.auth.sdk.auth.ApiKeyAuth;
  */
 public class ApiClient {
 
-    private String basePath = "http://localhost";
+    private String basePath = "http://localhost:8080";
     protected List<ServerConfiguration> servers = new ArrayList<ServerConfiguration>(Arrays.asList(
     new ServerConfiguration(
-      "",
-      "No description provided",
+      "http://localhost:8080",
+      "Gateway base URL",
       new HashMap<String, ServerVariable>()
     )
   ));
@@ -160,7 +160,7 @@ public class ApiClient {
     /**
      * Set base path
      *
-     * @param basePath Base path of the URL (e.g http://localhost
+     * @param basePath Base path of the URL (e.g http://localhost:8080
      * @return An instance of OkHttpClient
      */
     public ApiClient setBasePath(String basePath) {

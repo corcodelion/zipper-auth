@@ -1,6 +1,6 @@
 # OAuth2Api
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *http://localhost:8080*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
@@ -28,7 +28,7 @@ import com.zipper.auth.sdk.api.OAuth2Api;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
+    defaultClient.setBasePath("http://localhost:8080");
     
     // Configure HTTP basic authorization: basicAuth
     HttpBasicAuth basicAuth = (HttpBasicAuth) defaultClient.getAuthentication("basicAuth");
